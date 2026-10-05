@@ -1,0 +1,70 @@
+{
+  "historical_base": {
+    "period": "2024-FY",
+    "revenue": 1000000,
+    "cogs": 400000,
+    "operating_expenses": 300000,
+    "depreciation": 50000,
+    "interest_expense": 20000,
+    "tax_expense": 50000,
+    "net_income": 180000,
+    "cash": 200000,
+    "accounts_receivable": 120000,
+    "inventory": 80000,
+    "ppe_net": 500000,
+    "total_assets": 900000,
+    "accounts_payable": 70000,
+    "short_term_debt": 50000,
+    "long_term_debt": 250000,
+    "total_liabilities": 370000,
+    "retained_earnings": 430000,
+    "total_equity": 530000,
+    "operating_cash_flow": 220000,
+    "capex": 100000,
+    "financing_cash_flow": -50000
+  },
+  "operating_assumptions": {
+    "revenue_growth_rates": [
+      0.1,
+      0.08,
+      0.06,
+      0.05,
+      0.05
+    ],
+    "cogs_percent_revenue": [
+      0.4,
+      0.4,
+      0.4,
+      0.4,
+      0.4
+    ],
+    "opex_fixed": 100000,
+    "opex_variable_pct": 0.2,
+    "tax_rate": 0.21
+  },
+  "wc_drivers": {
+    "days_sales_outstanding": 45,
+    "days_inventory_outstanding": 60,
+    "days_payable_outstanding": 40,
+    "minimum_cash_balance": 50000
+  },
+  "capex_assumptions": {
+    "maintenance_capex_pct": 0.03,
+    "growth_capex": [
+      50000,
+      50000,
+      0,
+      0,
+      0
+    ],
+    "depreciation_method": "straight_line",
+    "asset_life_years": 10
+  },
+  "financing_assumptions": {
+    "debt_interest_rate": 0.05,
+    "target_cash_balance": 100000,
+    "dividend_payout_ratio": 0.3,
+    "revolver_capacity": 500000
+  },
+  "projection_years": 5
+}

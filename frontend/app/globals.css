@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  /* Navy, blue and gold from vertigeinvestmentgroup.com; darker blue for controls. */
+  --color-primary: #4f46e5;
+  --color-secondary: #e5b072;
+  --color-foreground: #0a192f;
+  --color-background: #f8fafc;
+  --color-brand-dark: #0a192f;
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #637be6;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+  --color-brand-950: #1e1b4b;
+  --radius-xl: 0.3rem;
+  --radius-2xl: 0.4rem;
+  --radius-3xl: 0.5rem;
+  --shadow-sm: 0 1px 2px rgb(32 43 48 / 3%);
+  --shadow-lg: 0 2px 6px rgb(32 43 48 / 5%);
+  --shadow-xl: 0 3px 8px rgb(32 43 48 / 6%);
+}
+
+/*
+  In Tailwind v4, we can set base styles directly or use @layer base.
+*/
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
+@media print {
+  aside, .no-print { display: none !important; }
+  body { background: white !important; }
+  main { margin: 0 !important; padding: 0 !important; }
+  .research-report { border: 0 !important; padding: 0 !important; }
+  .research-report h2, .research-report h3 { break-after: avoid; }
+  .research-report tr { break-inside: avoid; }
+  .research-report table { min-width: 0 !important; }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white border border-slate-200;
+  }
+
+  .glass-dark {
+    @apply bg-slate-900/80 backdrop-blur-lg border border-slate-700/50 shadow-xl;
+  }
+
+  .gradient-text {
+    color: var(--color-foreground);
+  }
+
+  .gradient-bg {
+    background: var(--color-primary);
+  }
+
+  .gradient-border { border: 1px solid #cfd7d2; }
+  .brand-logo-glow { background: linear-gradient(180deg, #637be6, #e5b072); }
+}
