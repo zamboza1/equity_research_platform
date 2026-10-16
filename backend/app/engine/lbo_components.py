@@ -1,6 +1,6 @@
 """
 LBO Model Components
-Advanced components for Leveraged Buyout modeling with full customization.
+Legacy debt, return and distribution helpers; not a complete buyout workflow.
 """
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional

@@ -7,7 +7,7 @@ const primers = [
         slug: 'real_estate',
         title: 'REIT Modeling Primer',
         description: 'A plain-English guide to NAV, FFO, AFFO, and Cap Rates.',
-        duration: '10 min read',
+        duration: 'Model reference',
         level: 'Beginner'
     },
 
@@ -18,7 +18,7 @@ export default function EducationPage() {
         <div className="max-w-5xl mx-auto">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold gradient-text">Knowledge Base</h1>
-                <p className="text-slate-500 mt-2">Master the fundamentals of equity research across sectors.</p>
+                <p className="text-slate-500 mt-2">Read the REIT primer for definitions, model inputs and limitations.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -39,7 +39,7 @@ export default function EducationPage() {
                                 href={`/education/primer/${primer.slug}`}
                                 className="flex items-center text-sm font-semibold text-brand-600 hover:text-brand-700"
                             >
-                                Start Learning
+                                Read primer
                             </Link>
                         </div>
                     </div>

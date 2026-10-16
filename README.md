@@ -8,17 +8,19 @@ A local equity research workspace for company notes, scenario valuations and fin
 
 **Model builder:** Create formulas or start with a one-to-ten-year cash-flow schedule. Edit annual drivers, compare input scenarios, run two-variable sensitivity and seeded simulations, and save named templates with their analysis settings. JSON preserves the model; CSV exports record the calculation inputs and results.
 
+**Financial statements:** Project up to 30 years and export a formatted Excel workbook with income statement, balance sheet, cash flow and recorded assumptions. Years run across columns; numeric values retain their precision with accounting display formats and reconciliation differences. The workbook is a calculated snapshot; recalculate changed assumptions in the app.
+
 **Research tools:** Build custom peer baskets, exclude unsuitable companies and apply earnings, book-value or EBITDA multiples. Explore historical returns, benchmark exposure, drawdowns and rolling volatility. Macro tools provide monthly histories and a dated Treasury curve. Tables export to CSV with source information. A peer can seed a research case with provider inputs; forecasts remain illustrative until reviewed.
 
 **Backend:** FastAPI provides DCF, dividend and asset valuations, linked financial statements, a bounded formula graph, and SQLite research storage. Yahoo Finance supplies optional company data. FRED supplies US macro data and Canadian unemployment and bond yields; Bank of Canada supplies Statistics Canada CPI.
 
-**Frontend:** Next.js provides the research library, model editors, calculation tables and charts. Reports open as printable pages and export to Markdown or JSON. The interface follows Vertige's navy, blue and gold palette, with text navigation and visible source dates.
+**Frontend:** Next.js provides the research library, model editors, calculation tables and charts. Reports open as printable pages and export to Markdown or JSON.
 
 ## Engineering Standards
 
 **Mathematics:** Independent reference calculations cover valuation outputs and accounting reconciliations. Units, terminal assumptions and limitations are documented in [Model conventions](docs/model-conventions.md).
 
-**Resilience:** Invalid inputs do not produce saved results. Optimistic revision checks protect concurrent work, and changes hide outdated valuations. Provider failures remain visible; missing data is not replaced with invented figures. An on-screen status distinguishes offline mode from missing configuration.
+**Saved work:** Research saves check the expected revision and reject conflicts. Editing assumptions clears derived results. Provider failures remain visible, with configuration status and source dates alongside the data. Browser templates are local to that browser; research cases are stored in SQLite.
 
 **Scope:** This is a local application without authentication, not a public multiuser service. Research inputs and weights are analyst assumptions. Source links are references, not independent verification. Legacy LBO, M&A and accounting-conversion helpers are not complete workflows.
 
@@ -41,7 +43,23 @@ For macro data, copy `backend/.env.example` to `backend/.env`, add your FRED key
 
 Research cases are stored in `backend/data/research.sqlite3`; `VERTIGE_RESEARCH_DB` can set a different path. Back up the database while the backend is stopped, or export individual cases. JSON import creates a separate case and recalculates it with the current engine. It does not import another case's revision history.
 
-For a production frontend, set `BACKEND_URL=http://127.0.0.1:8327` before `npm run build`, then use `npm start -- --hostname 127.0.0.1 --port 3327` from `frontend`. Start the backend separately. Keep the service local unless authentication and deployment controls are added.
+To run the production build, start the backend in one terminal from the repository root:
+
+```sh
+cd backend
+.venv313/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8327
+```
+
+In a second terminal, also from the repository root:
+
+```sh
+cd frontend
+export BACKEND_URL=http://127.0.0.1:8327
+npm run build
+npm start -- --port 3327
+```
+
+The frontend's API destination is set when it is built. Rebuild after changing the backend port. Keep both services local unless authentication and deployment controls are added.
 
 ## Testing
 

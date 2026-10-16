@@ -69,7 +69,7 @@ export default function IndustryAnalysis() {
         </div>
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Industry Analysis</h1>
-          <p className="text-slate-500">Deep-dive into sector-specific drivers, key metrics, and company universes</p>
+          <p className="text-slate-500">Explore sector drivers, metric definitions and labeled company examples.</p>
         </div>
       </div>
 

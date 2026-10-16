@@ -48,7 +48,7 @@ export default function ValuationPage() {
                             Choose a model, review its assumptions, and inspect the calculation.
                         </p>
                     </div>
-                    {activeTab !== '3statement' && <HelpButton modelType={activeTab} />}
+                    <HelpButton key={activeTab} modelType={activeTab} />
                 </div>
             </div>
 

@@ -239,10 +239,9 @@ async def get_sector_profile(sector_id: str):
 
 @router.get("/sectors/{sector_id}/companies", response_model=List[CompanyProfile])
 async def get_sector_companies(sector_id: str):
-    """Returns key companies in the sector"""
+    """Return labeled, static company examples for the selected sector."""
 
-    # This would ideally pull from real-time data
-    # For now, returning mock data for demonstration
+    # Illustrative examples; CompanyProfile identifies them as non-current data.
 
     companies_db = {
         "real_estate": [

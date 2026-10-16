@@ -1,6 +1,7 @@
 """
-Data Ingestion Module for Historical Financials
-Supports: SEC EDGAR, Excel, CSV, PDF
+Legacy financial-data helpers.
+CSV/XLSX parsing is implemented; SEC mapping, PDF extraction and accounting
+conversion are incomplete and are not the routed statement-import workflow.
 """
 from typing import List, Dict, Optional
 from pydantic import BaseModel

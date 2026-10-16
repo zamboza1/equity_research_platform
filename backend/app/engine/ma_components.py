@@ -1,6 +1,6 @@
 """
 M&A (Mergers & Acquisitions) Components
-Advanced components for M&A modeling with synergy tracking and accretion/dilution analysis.
+Legacy synergy and accretion/dilution helpers; not a complete transaction model.
 """
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional

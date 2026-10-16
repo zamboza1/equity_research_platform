@@ -1,54 +1,56 @@
-## REIT Modeling Primer (CAPREIT example)
+## REIT modeling primer
 
-*A plain-English guide to what each metric means, why it matters, and where it shows up in your model.*
-**Version date: 2025-12-27**
+Definitions and inputs for reviewing a property business. Updated October 16, 2026.
+This is a model reference, not a company valuation.
 
----
+## Operating performance
 
-## 1) What you are building (the big picture)
-A REIT model is a way to explain:
-1. **How the buildings perform** (rent, occupancy, expenses)
-2. **How that performance turns into cash for unitholders** (FFO/AFFO, distributions)
-3. **What the portfolio is worth today** (NAV)
-
-You will use two connected views:
-### Operating view (income engine)
-**Occupancy + rent growth + expenses → NOI → (G&A, interest, adjustments) → FFO/AFFO → distributions**
-
-### Asset value view (what it’s worth)
-**Stabilized NOI ÷ cap rate → property value → NAV per unit**
-
----
-
-## 2) Key terms (simple definitions + the nuance)
-
-### Core operating metrics
-| Term | Simple meaning | Nuance |
+| Measure | What it describes | What to check |
 | :--- | :--- | :--- |
-| **Occupancy** | % of suites (or sqft) rented | Small changes matter due to turnover costs. |
-| **Occupied AMR** | Avg Monthly Rent on occupied suites | Mixes existing rent bumps + turnover lift. |
-| **Turnover** | % moving out | Drives "mark-to-market" but increases costs. |
+| Occupancy | The proportion of available units or floor area rented | Use the same denominator and reporting period when comparing properties. |
+| Average monthly rent | Rent per occupied unit | Changes can reflect lease renewals, turnover and property mix. |
+| Net operating income (NOI) | Property revenue less property operating expenses | Keep corporate expenses, financing costs and income taxes separate. |
+| Same-property NOI | NOI for a defined group of properties across periods | Check which acquisitions, disposals and developments the issuer excludes. |
 
-### Profit metrics
-| Term | Simple meaning | Nuance |
-| :--- | :--- | :--- |
-| **NOI** | Property-level profit | The "real estate engine". Keep separate from corporate G&A. |
-| **Same-Property NOI** | NOI for constant set of properties | Shows organic growth (strips out buy/sell noise). |
+Total NOI can grow through acquisitions even when the existing portfolio is flat.
+Use the issuer's same-property definition when assessing operating growth.
 
-### Valuation metrics
-| Term | Simple meaning | Nuance |
-| :--- | :--- | :--- |
-| **NAV per unit** | (Asset value - Debt) / Units | Very sensitive to Cap Rate assumptions. |
-| **Cap rate** | NOI / Value | Lower cap rate = Higher value. Driven by rates + growth. |
+## FFO and AFFO
 
----
+Nareit FFO adjusts US GAAP net income for real-estate depreciation and amortization,
+specified gains, losses and impairments, with relevant joint-venture adjustments.
+It is a supplemental operating-performance measure. NOI less corporate expenses
+and interest alone is not a complete FFO reconciliation.
+[Nareit FFO definition](https://www.reit.com/glossary/funds-operation-ffo).
 
-## 3) How specific tabs work
-- **NOI Drivers**: Unit economics. Inputs: `units`, `occupancy`, `AMR growth`. Output: `NOI`.
-- **FFO Bridge**: `NOI - G&A - Interest`. Output: `FFO/share`.
-- **NAV**: `Stabilized NOI / Cap Rate`. Output: `NAV/share` and `Upside %`.
+AFFO makes further adjustments that vary by issuer, often including recurring
+property expenditures and straight-line rent. There is no standardized AFFO
+definition. Read the company's reconciliation before comparing values or using
+them to assess distributions.
+[Nareit AFFO definition](https://www.reit.com/glossary/adjusted-funds-operations-affo).
 
-## 4) Common Pitfalls
-> [!WARNING]
-> **Mixing NOI and FFO**: Don't put Interest Expense in NOI.
-> **Total vs Same-Property**: Total NOI grows if you buy buildings; SP-NOI grows if you manage better.
+Check the reporting framework and issuer's definitions for each company; do not
+apply a US GAAP reconciliation unchanged to IFRS statements. FFO and AFFO should
+be considered alongside the cash-flow statement and investment requirements.
+
+## Real-estate NAV in Vertige
+
+Open **Valuations → NAV Model → Real estate** and enter verified assumptions:
+
+1. **Annual NOI and cap rate:** property value equals annual NOI divided by the cap rate. Enter the rate as a decimal, for example `0.05` for 5%.
+2. **Other assets:** add asset values not already included in capitalized NOI.
+3. **Claims:** deduct debt, minority interest and preferred equity.
+4. **Shares:** divide equity NAV by diluted shares outstanding.
+
+Money and shares use millions; NAV per share uses currency per share. Keep all
+inputs in one currency. Initial inputs are illustrative. The model does not
+automatically retrieve property appraisals, build an NOI forecast or reconcile FFO.
+
+For an illustrative annual NOI of 100 and cap rate of 5%, property value is 2,000.
+With no other assets, debt of 500, no minority or preferred claims and 100 million
+shares, equity NAV is 1,500 and NAV per share is 15. At a 6% cap rate with all
+other assumptions unchanged, NAV per share falls to about 11.67.
+
+Cap rates, sustainable NOI, omitted claims and dilution can materially change the
+result. Estimated NAV is not a forecast of liquidation proceeds or proof that a
+share-price discount is an investment opportunity.

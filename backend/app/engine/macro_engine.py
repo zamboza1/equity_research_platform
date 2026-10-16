@@ -1,6 +1,7 @@
 import numpy as np
 from typing import List, Dict, Optional
 from pydantic import BaseModel
+from scipy.stats import linregress
 
 class YieldCurvePoint(BaseModel):
     tenor: str
@@ -10,13 +11,13 @@ class MacroRegressionResult(BaseModel):
     factor: str
     beta: float
     r_squared: float
-    p_value: float
+    p_value: Optional[float]
 
 class MacroEngine:
     @staticmethod
     def get_yield_curve_data() -> List[YieldCurvePoint]:
         """
-        Returns real-time institutional treasury yield curve data from Yahoo Finance.
+        Read the latest available daily Yahoo yield-index closes.
         """
         import yfinance as yf
 
@@ -44,7 +45,7 @@ class MacroEngine:
                 continue
 
         if not curve:
-            # If fetch fails, return empty list rather than mock per "NO SIMULATION" rule
+            # Missing observations produce no curve points.
             return []
 
         return curve
@@ -52,13 +53,20 @@ class MacroEngine:
     @staticmethod
     def perform_factor_regression(asset_returns: List[float], macro_factor: List[float], factor_name: str) -> MacroRegressionResult:
         """
-        Performs linear regression (OLS) to find factor betas.
+        Fit OLS with an intercept to caller-aligned observations.
+        The two-sided slope p-value assumes independent, normally distributed
+        residuals. It is unavailable with two observations or constant returns.
+        This legacy helper is not connected to the current application routes.
         """
         if len(asset_returns) != len(macro_factor) or len(asset_returns) < 2:
-            return MacroRegressionResult(factor=factor_name, beta=0, r_squared=0, p_value=1.0)
+            raise ValueError("Regression requires at least two aligned observations")
 
-        x = np.array(macro_factor)
-        y = np.array(asset_returns)
+        x = np.asarray(macro_factor, dtype=float)
+        y = np.asarray(asset_returns, dtype=float)
+        if x.ndim != 1 or y.ndim != 1 or not np.isfinite(x).all() or not np.isfinite(y).all():
+            raise ValueError("Regression observations must be finite one-dimensional values")
+        if np.ptp(x) == 0:
+            raise ValueError("The regression factor must vary")
 
         # Simple OLS: beta = cov(x,y) / var(x)
         matrix = np.vstack([x, np.ones(len(x))]).T
@@ -75,5 +83,5 @@ class MacroEngine:
             factor=factor_name,
             beta=float(beta),
             r_squared=float(r_squared),
-            p_value=0.01 # Simplified for MVP
+            p_value=float(linregress(x, y).pvalue) if len(x) > 2 and ss_tot > 0 else None
         )

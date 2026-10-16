@@ -8,7 +8,7 @@ import numpy as np
 
 router = APIRouter()
 
-# Ticker lists for discovery (Not mock data, but a directory of supported/tracked stocks)
+# Curated starting lists; metrics are fetched separately from the provider.
 SECTOR_TICKERS = {
     "Technology": ["MSFT", "AAPL", "GOOGL", "NVDA", "ORCL", "CRM", "AMD", "ADBE", "CSCO", "INTC"],
     "Real Estate": ["PLD", "AMT", "EQIX", "WELL", "PSA", "DLR", "O", "VICI", "SBAC", "CCI"],

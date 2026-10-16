@@ -1,6 +1,6 @@
 """
-Real NLP Sentiment Analysis using Transformers
-Uses FinBERT (financial domain-specific BERT) for accurate sentiment on financial news.
+Keyword sentiment with optional FinBERT inference.
+Method labels identify the path used; scores are not calibrated accuracy estimates.
 """
 from typing import Dict, List
 import logging
@@ -10,8 +10,7 @@ logger = logging.getLogger(__name__)
 
 class FinancialSentimentAnalyzer:
     """
-    Real sentiment analysis using pre-trained FinBERT model.
-    Falls back to rule-based if model unavailable.
+    Use keywords by default and FinBERT only when explicitly enabled and available.
     """
 
     def __init__(self):
@@ -20,7 +19,7 @@ class FinancialSentimentAnalyzer:
         # Model will be initialized on first use to speed up startup
 
     def _initialize_model(self):
-        """Load FinBERT model. Gracefully fallback if unavailable."""
+        """Try loading FinBERT once when enabled; retain keyword analysis on failure."""
         if self.model is not None or self.attempted:
             return
         self.attempted = True
@@ -55,7 +54,7 @@ class FinancialSentimentAnalyzer:
     def _analyze_with_model(self, text: str) -> Dict[str, any]:
         """Use FinBERT for analysis"""
         try:
-            result = self.model(text[:512])[0]  # FinBERT has 512 token limit
+            result = self.model(text[:512])[0]  # Existing 512-character input bound, not a token count.
 
             # Map FinBERT labels to our format
             label_map = {

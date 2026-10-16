@@ -47,7 +47,7 @@ class NAVEngine:
 
     @staticmethod
     def calculate_resource(inputs: ResourceNAVInputs) -> Dict:
-        # Simplified risked NAV for resources
+        # Undiscounted reserve-margin estimate; no probability or production schedule.
         reserve_value = inputs.reserves * (inputs.value_per_unit - inputs.production_cost_per_unit)
         nav = reserve_value + inputs.exploration_upside - inputs.liabilities
         nav_per_share = nav / inputs.shares_outstanding if inputs.shares_outstanding > 0 else 0

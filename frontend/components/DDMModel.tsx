@@ -113,8 +113,8 @@ export default function DDMModel() {
                             <label htmlFor="ddmmodel-1" className="block text-xs font-semibold text-slate-500 uppercase mb-1">Annual dividend per share</label>
                             <input id="ddmmodel-1"
                                 type="number"
-                                aria-label="Annual dividend per share" value={currentDividend}
-                                onChange={(e) => setCurrentDividend(parseFloat(e.target.value) || 0)}
+                                aria-label="Annual dividend per share" value={Number.isFinite(currentDividend) ? currentDividend : ''}
+                                onChange={(e) => setCurrentDividend(e.target.valueAsNumber)}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
                         </div>
@@ -122,8 +122,8 @@ export default function DDMModel() {
                             <label htmlFor="ddmmodel-2" className="block text-xs font-semibold text-slate-500 uppercase mb-1">Market price per share</label>
                             <input id="ddmmodel-2"
                                 type="number"
-                                aria-label="Market price per share" value={currentPrice}
-                                onChange={(e) => setCurrentPrice(parseFloat(e.target.value) || 0)}
+                                aria-label="Market price per share" value={Number.isFinite(currentPrice) ? currentPrice : ''}
+                                onChange={(e) => setCurrentPrice(e.target.valueAsNumber)}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
                         </div>
@@ -133,8 +133,8 @@ export default function DDMModel() {
                         <label htmlFor="ddmmodel-3" className="block text-xs font-semibold text-slate-500 uppercase mb-1">Cost of Equity (%)</label>
                         <input id="ddmmodel-3"
                             type="number"
-                            aria-label="Cost of equity (%)" value={requiredReturn * 100}
-                            onChange={(e) => setRequiredReturn(parseFloat(e.target.value) / 100)}
+                            aria-label="Cost of equity (%)" value={Number.isFinite(requiredReturn) ? requiredReturn * 100 : ''}
+                            onChange={(e) => setRequiredReturn(e.target.valueAsNumber / 100)}
                             className="w-full px-3 py-2 border rounded-lg"
                         />
                     </div>
@@ -144,8 +144,8 @@ export default function DDMModel() {
                             <label htmlFor="ddmmodel-4" className="block text-xs font-semibold text-slate-500 uppercase mb-1">Growth Rate (%)</label>
                             <input id="ddmmodel-4"
                                 type="number"
-                                aria-label="Dividend growth (%)" value={growthRate * 100}
-                                onChange={(e) => setGrowthRate(parseFloat(e.target.value) / 100)}
+                                aria-label="Dividend growth (%)" value={Number.isFinite(growthRate) ? growthRate * 100 : ''}
+                                onChange={(e) => setGrowthRate(e.target.valueAsNumber / 100)}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
                         </div>
@@ -153,8 +153,8 @@ export default function DDMModel() {
                             <label htmlFor="ddmmodel-5" className="block text-xs font-semibold text-slate-500 uppercase mb-1">Terminal g (%) · multi-stage only</label>
                             <input id="ddmmodel-5"
                                 type="number"
-                                aria-label="Terminal dividend growth (%)" value={terminalGrowth * 100}
-                                onChange={(e) => setTerminalGrowth(parseFloat(e.target.value) / 100)}
+                                aria-label="Terminal dividend growth (%)" value={Number.isFinite(terminalGrowth) ? terminalGrowth * 100 : ''}
+                                onChange={(e) => setTerminalGrowth(e.target.valueAsNumber / 100)}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
                         </div>
@@ -182,7 +182,7 @@ export default function DDMModel() {
                         disabled={loading}
                         className="w-full py-4 bg-brand-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl flex items-center justify-center space-x-2 shadow-lg shadow-brand-100 hover:bg-brand-700 transition-all disabled:opacity-70"
                     >
-                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Solve {modelType.toUpperCase()} DDM</span>}
+                        {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Calculate {modelType === 'gordon' ? 'Gordon' : 'multi-stage'} value</span>}
                     </button>
 
                     {error && (
@@ -202,12 +202,12 @@ export default function DDMModel() {
                         className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100"
                     >
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-lg font-bold">Solving for {ticker} Intrinsic Value</h3>
+                            <h3 className="text-lg font-bold">{ticker} dividend valuation</h3>
                             <div className={clsx(
                                 "px-4 py-1 rounded-full text-xs font-bold",
                                 result.upside > 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
                             )}>
-                                {(result.upside).toFixed(1)}% Implied Upside
+                                {(result.upside).toFixed(1)}% vs market price
                             </div>
                         </div>
 

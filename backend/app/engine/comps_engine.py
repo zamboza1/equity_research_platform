@@ -11,7 +11,7 @@ class ComparableScore(BaseModel):
 class AdvancedCompsEngine:
     @staticmethod
     def calculate_composite_scores(companies: List[Dict]) -> List[Dict]:
-        """Calculates institutional scores for growth, profitability, and valuation"""
+        """Apply fixed weights to normalized growth, margin and P/E scores."""
         if not companies:
             return []
 
@@ -53,8 +53,8 @@ class AdvancedCompsEngine:
     @staticmethod
     def identify_nlp_similarity(target_desc: str, peers: List[Dict]) -> List[Dict]:
         """
-        Placeholder for NLP similarity ranking.
-        In production, use sentence-transformers or TF-IDF.
+        Calculate Jaccard overlap of description tokens.
+        This lexical comparison is not a probability or a peer-selection model.
         """
         # Explicit token overlap, not an NLP probability or financial score.
         import re

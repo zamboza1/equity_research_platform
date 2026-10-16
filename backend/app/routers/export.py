@@ -11,6 +11,8 @@ from reportlab.lib.pagesizes import landscape, A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet
 from xml.sax.saxutils import escape
+from app.routers.valuation import ProjectionRequest
+from app.statement_export import statement_workbook
 
 router=APIRouter()
 class ExportRequest(BaseModel):
@@ -37,6 +39,16 @@ def table_data(request):
 
 def filename(request,extension):
     return re.sub(r'[^A-Za-z0-9_-]','_',f'{request.ticker}_{request.model_type}')+extension
+
+@router.post('/excel/three-statement')
+def statement_excel(request: ProjectionRequest):
+    workbook = statement_workbook(request)
+    stream = io.BytesIO()
+    workbook.save(stream)
+    stream.seek(0)
+    return StreamingResponse(stream,
+        media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        headers={'Content-Disposition': 'attachment; filename="vertige-three-statement.xlsx"'})
 
 @router.post('/excel')
 def excel(request:ExportRequest):
