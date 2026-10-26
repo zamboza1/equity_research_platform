@@ -1,5 +1,9 @@
 # Verification
 
+The latest targeted check is [NAV draft persistence, October 26, 2026](nav-drafts-verification.md).
+The October 16 record below is retained as historical evidence; its dependency
+audit and broader provider checks were not rerun for the NAV change.
+
 The October 16, 2026 follow-up starts from commit
 `c7d5c62b1869aadd85307688861a0f2e25cd7f28`. `source-manifest.json` identifies the
 checked source files, tests, locks and startup scripts. The manifest and this

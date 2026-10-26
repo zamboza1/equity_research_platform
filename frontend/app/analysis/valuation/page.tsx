@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import AdvancedDCF from '@/components/AdvancedDCF';
 import DDMModel from '@/components/DDMModel';
 import AdvancedNAV from '@/components/AdvancedNAV';
+import { initialNAVDraft } from '@/utils/navDraft';
 import ThreeStatementModel from '@/components/ThreeStatementModel';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -14,6 +15,7 @@ import clsx from 'clsx';
 export default function ValuationPage() {
     const [mounted, setMounted] = useState(false);
     const [activeTab, setActiveTab] = useState<'dcf' | 'ddm' | 'nav' | '3statement'>('dcf');
+    const [navDraft, setNavDraft] = useState(initialNAVDraft);
 
     useEffect(() => {
         setMounted(true);
@@ -78,7 +80,7 @@ export default function ValuationPage() {
             >
                 {activeTab === 'dcf' && <AdvancedDCF />}
                 {activeTab === 'ddm' && <DDMModel />}
-                {activeTab === 'nav' && <AdvancedNAV />}
+                {activeTab === 'nav' && <AdvancedNAV draft={navDraft} onDraftChange={setNavDraft} />}
                 {activeTab === '3statement' && <ThreeStatementModel />}
             </motion.div>
         </div>

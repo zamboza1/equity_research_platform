@@ -10,6 +10,8 @@ A local equity research workspace for company notes, scenario valuations and fin
 
 **Financial statements:** Project up to 30 years and export a formatted Excel workbook with income statement, balance sheet, cash flow and recorded assumptions. Years run across columns; numeric values retain their precision with accounting display formats and reconciliation differences. The workbook is a calculated snapshot; recalculate changed assumptions in the app.
 
+**NAV drafts:** Keep separate real-estate and resource inputs while switching valuation models. Save both drafts in the browser before leaving or reloading, then restore and recalculate. Incomplete inputs remain blank, and unavailable storage is reported.
+
 **Research tools:** Build custom peer baskets, exclude unsuitable companies and apply earnings, book-value or EBITDA multiples. Explore historical returns, benchmark exposure, drawdowns and rolling volatility. Macro tools provide monthly histories and a dated Treasury curve. Tables export to CSV with source information. A peer can seed a research case with provider inputs; forecasts remain illustrative until reviewed.
 
 **Backend:** FastAPI provides DCF, dividend and asset valuations, linked financial statements, a bounded formula graph, and SQLite research storage. Yahoo Finance supplies optional company data. FRED supplies US macro data and Canadian unemployment and bond yields; Bank of Canada supplies Statistics Canada CPI.
@@ -69,6 +71,7 @@ cd backend
 cd ../frontend
 npm run typecheck
 npm run lint
+npm run test:nav
 npm run build
 ```
 

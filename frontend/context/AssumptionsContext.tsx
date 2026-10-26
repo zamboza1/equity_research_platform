@@ -32,13 +32,13 @@ export function AssumptionsProvider({ children }: { children: React.ReactNode })
 
     // Load from local storage on mount
     useEffect(() => {
-        const saved = localStorage.getItem('global-assumptions');
-        if (saved) {
-            try {
+        try {
+            const saved = localStorage.getItem('global-assumptions');
+            if (saved) {
                 setAssumptions(JSON.parse(saved));
-            } catch (e) {
-                console.error("Failed to parse assumptions", e);
             }
+        } catch {
+            console.warn('Saved global assumptions could not be loaded; using defaults.');
         }
     }, []);
 

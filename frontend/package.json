@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:nav": "node --test tests/nav-draft.test.cjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",
